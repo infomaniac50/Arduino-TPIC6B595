@@ -4,11 +4,10 @@
   Released into the public domain.
 */
 
-#include "Seg7.h"
-#include "WProgram.h"
+#include "TPIC6B595.h"
 #define GATE_DELAY 20
 
-Seg7::Seg7(int dataPin, int clockPin, int latchPin, int clearPin)
+TPIC6B595::TPIC6B595(int dataPin, int clockPin, int latchPin, int clearPin)
 {
   _dataPin = dataPin;
   _clockPin = clockPin;
@@ -16,40 +15,13 @@ Seg7::Seg7(int dataPin, int clockPin, int latchPin, int clearPin)
   _clearPin = clearPin;
 }
 
-void Seg7::init(byte* bin1)
+void TPIC6B595::init(int registers)
 {
-  digits = 1;
-  _bin1 = bin1;
+  
 }
 
-void Seg7::init(byte* bin1, byte* bin2)
+void TPIC6B595::sendByte(int number)
 {
-  digits = 2;
-  _bin1 = bin1;
-  _bin2 = bin2;
-}
-
-void Seg7::init(byte* bin1, byte* bin2, byte* bin3)
-{
-  digits = 3;
-  _bin1 = bin1;
-  _bin2 = bin2;
-  _bin3 = bin3;
-}
-
-void Seg7::init(byte* bin1, byte* bin2, byte* bin3, byte* bin4)
-{
-  digits = 4;
-  _bin1 = bin1;
-  _bin2 = bin2;
-  _bin3 = bin3;
-  _bin4 = bin4;
-}
-
-void Seg7::sendNumber(int number)
-{
-  clear();
-
   switch(digits)
   {
     case 4:
@@ -65,18 +37,13 @@ void Seg7::sendNumber(int number)
   pulsePin(_latchPin, HIGH);  
 }
 
-void Seg7::clear()
+void TPIC6B595::clear()
 {
   pulsePin(_clearPin, LOW);
   pulsePin(_latchPin, HIGH);
 }
 
-int Seg7::getDigit(int number, int pos)
-{
-  return (number / (int)pow(10, pos)) % 10;
-}
-
-void Seg7::pulsePin(int pin, int active)
+void TPIC6B595::pulsePin(int pin, int active)
 {
   if (active == HIGH)
   {

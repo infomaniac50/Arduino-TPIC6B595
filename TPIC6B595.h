@@ -4,32 +4,29 @@
   Released into the public domain.
 */
 
-#ifndef Seg7_h
-#define Seg7_h
+#ifndef TPIC6B595_h
+#define TPIC6B595_h
 
-#include "WProgram.h"
-class Seg7
+#if (ARDUINO >= 100)
+ #include "Arduino.h"
+#else
+ #include "WProgram.h"
+#endif
+
+class TPIC6B595
 {
   public:
-    Seg7(int dataPin,int clockPin, int latchPin, int clearPin);
-    void init(byte* bin1);
-    void init(byte* bin1, byte* bin2);
-    void init(byte* bin1, byte* bin2, byte* bin3);
-    void init(byte* bin1, byte* bin2, byte* bin3, byte* bin4);
-    void sendNumber(int number);
+    TPIC6B595(int dataPin,int clockPin, int latchPin, int clearPin);
+    void digitalWrite(int pin, int mode);
+    
     void clear();
   private:
     int _dataPin;
     int _clockPin;
     int _latchPin;
-    int _clearPin;
-    byte *_bin1;
-    byte *_bin2;
-    byte *_bin3;
-    byte *_bin4;
-    int digits; 
-    int getDigit(int number, int pos);
-    void sendByte(byte data);
+    int _clearPin;  
+    byte * _register_pins;
+    byte _num_registers;
     void pulsePin(int pin, int active);    
 };
 #endif
