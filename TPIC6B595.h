@@ -1,8 +1,3 @@
-/*
-  Seg7.h - A library to control the TPIC6B595 Serial to Parallel Shift Register
-  Created by Derek Chafin, October 8, 2011
-  Released into the public domain.
-*/
 
 #ifndef TPIC6B595_h
 #define TPIC6B595_h
