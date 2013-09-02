@@ -12,7 +12,7 @@ class TPIC6B595
 {
   public:
     TPIC6B595(int dataPin,int clockPin, int latchPin, int clearPin);
-    void digitalWrite(int pin, int mode);
+    void write(byte bits);
     
     void clear();
   private:
@@ -20,8 +20,6 @@ class TPIC6B595
     int _clockPin;
     int _latchPin;
     int _clearPin;  
-    byte * _register_pins;
-    byte _num_registers;
     void pulsePin(int pin, int active);    
 };
 #endif

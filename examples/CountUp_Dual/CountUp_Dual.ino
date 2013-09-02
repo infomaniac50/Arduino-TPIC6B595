@@ -51,8 +51,8 @@ Pin 4: Output Clock
 Pin 3: Clear (Active Low)
 Pin 2: Serial Data
 */
-
-#include "Seg7.h"
+#include <SPI.h>
+#include "TPIC6B595.h"
 
 byte IC1[] = {
 B11100111,
@@ -79,24 +79,20 @@ B10001010,
 B11101111, 
 B10001111  
 };
+
 //#define DEBUG
 const int dataPin = 2;
 const int dataClock = 5;
 const int latchClock = 4;
 const int dataClear = 3;
-Seg7 disp(dataPin, dataClock, latchClock, dataClear);
+TPIC6B595 disp(dataPin, dataClock, latchClock, dataClear);
 
 void setup()
 {
 #ifdef DEBUG
   Serial.begin(9600);
 #endif
-  pinMode(dataPin, OUTPUT);
-  pinMode(dataClock,OUTPUT);
-  pinMode(latchClock,OUTPUT);
-  pinMode(dataClear,OUTPUT);
   
-  disp.init(IC1, IC2);
   disp.clear();
 }
 
@@ -107,7 +103,9 @@ void loop()
 #ifdef DEBUG
     Serial.println(i);
 #endif
-    disp.sendNumber(i);
+    // Get the tens digit
+    disp.write(IC2[i / 10]);
+    disp.write(IC1[i % 10]);
     delay(500);
   }
 }

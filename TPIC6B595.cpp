@@ -1,35 +1,42 @@
 
+#include "config.h"
 #include "TPIC6B595.h"
+
 #define GATE_DELAY 20
+
+#if USE_HARD_SPI
+#include <SPI.h>
+#endif
 
 TPIC6B595::TPIC6B595(int dataPin, int clockPin, int latchPin, int clearPin)
 {
+#if USE_HARD_SPI
+  SPI.begin();
+  SPI.setDataMode(SPI_MODE0);
+  SPI.setClockDivider(SPI_CLOCK_DIV2);
+  SPI.setBitOrder(LSBFIRST);
+#else  
+  pinMode(dataPin, OUTPUT);
+  pinMode(clockPin,OUTPUT);
+#endif
+
+  pinMode(latchPin,OUTPUT);
+  pinMode(clearPin,OUTPUT);
+
   _dataPin = dataPin;
   _clockPin = clockPin;
   _latchPin = latchPin;
   _clearPin = clearPin;
 }
 
-void TPIC6B595::init(int registers)
+void TPIC6B595::write(byte bits)
 {
-  
-}
-
-void TPIC6B595::sendByte(int number)
-{
-  switch(digits)
-  {
-    case 4:
-      shiftOut(_dataPin, _clockPin, LSBFIRST, _bin4[getDigit(number, 3)]);
-    case 3:
-      shiftOut(_dataPin, _clockPin, LSBFIRST, _bin3[getDigit(number, 2)]);
-    case 2:
-      shiftOut(_dataPin, _clockPin, LSBFIRST, _bin2[getDigit(number, 1)]);
-    case 1:
-      shiftOut(_dataPin, _clockPin, LSBFIRST, _bin1[getDigit(number, 0)]);
-  }
-  
-  pulsePin(_latchPin, HIGH);  
+#if USE_HARD_SPI
+  SPI.transfer(bits);
+#else
+  shiftOut(_dataPin, _clockPin, LSBFIRST, bits);
+#endif
+  pulsePin(_latchPin, HIGH);
 }
 
 void TPIC6B595::clear()
