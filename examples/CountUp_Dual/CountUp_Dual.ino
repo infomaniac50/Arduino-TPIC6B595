@@ -89,7 +89,7 @@ void setup()
 #ifdef DEBUG
   Serial.begin(9600);
 #endif
-  
+  disp.begin();  
   disp.clear();
 }
 
