@@ -1,8 +1,5 @@
 /*
-CountUp_Dual
-Derek Chafin
-October 8, 2011
-Public Domain
+CountUp_Dual.ino
 Counts from 0 to 99 using a dual common positive 7 segment display
 
 
