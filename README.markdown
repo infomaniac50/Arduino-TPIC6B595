@@ -2,8 +2,7 @@
 
 ### Description
 This arduino library controls the Texas Instruments TPIC6B595 Serial to Parallel Shift Register.
-This library has support for up to four cascaded devices.
-The library does not use the output enable pin and it should be kept low.
+This library will use hardware SPI if configured to do so. To change it open config.h and edit USE_HARD_SPI to 1 or 0 to use Hardware SPI are Software SPI respectively. Please note, that if you use Hardware SPI you must set the SS pin to an output per the Arduino library reference or the Arduino can be put into slave mode.
 
 ### Authorship
 Derek Chafin  
