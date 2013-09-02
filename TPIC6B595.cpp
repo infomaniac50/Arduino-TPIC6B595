@@ -24,12 +24,12 @@ void TPIC6B595::begin()
   SPI.setClockDivider(SPI_CLOCK_DIV2);
   SPI.setBitOrder(LSBFIRST);
 #else  
-  pinMode(dataPin, OUTPUT);
-  pinMode(clockPin,OUTPUT);
+  pinMode(_dataPin, OUTPUT);
+  pinMode(_clockPin,OUTPUT);
 #endif
 
-  pinMode(latchPin,OUTPUT);
-  pinMode(clearPin,OUTPUT);
+  pinMode(_latchPin,OUTPUT);
+  pinMode(_clearPin,OUTPUT);
 }
 
 void TPIC6B595::write(byte bits)
