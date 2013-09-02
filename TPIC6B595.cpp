@@ -10,6 +10,14 @@
 
 TPIC6B595::TPIC6B595(int dataPin, int clockPin, int latchPin, int clearPin)
 {
+  _dataPin = dataPin;
+  _clockPin = clockPin;
+  _latchPin = latchPin;
+  _clearPin = clearPin;
+}
+
+void TPIC6B595::begin()
+{
 #if USE_HARD_SPI
   SPI.begin();
   SPI.setDataMode(SPI_MODE0);
@@ -22,11 +30,6 @@ TPIC6B595::TPIC6B595(int dataPin, int clockPin, int latchPin, int clearPin)
 
   pinMode(latchPin,OUTPUT);
   pinMode(clearPin,OUTPUT);
-
-  _dataPin = dataPin;
-  _clockPin = clockPin;
-  _latchPin = latchPin;
-  _clearPin = clearPin;
 }
 
 void TPIC6B595::write(byte bits)

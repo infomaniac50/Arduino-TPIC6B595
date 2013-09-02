@@ -13,7 +13,7 @@ class TPIC6B595
   public:
     TPIC6B595(int dataPin,int clockPin, int latchPin, int clearPin);
     void write(byte bits);
-    
+    void begin();    
     void clear();
   private:
     int _dataPin;
